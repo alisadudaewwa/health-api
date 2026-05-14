@@ -9,6 +9,15 @@ from schemas import (
 )
 from datetime import datetime, timedelta
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # или ["*"] для тестов
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Health Metrics API v2")
