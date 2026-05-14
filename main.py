@@ -11,6 +11,10 @@ from datetime import datetime, timedelta
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 
+
+Base.metadata.create_all(bind=engine)
+app = FastAPI(title="Health Metrics API v2")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],  # или ["*"] для тестов
@@ -18,9 +22,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-Base.metadata.create_all(bind=engine)
-app = FastAPI(title="Health Metrics API v2")
 
 @app.post("/users", response_model=UserOut)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
